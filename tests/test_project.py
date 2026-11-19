@@ -29,6 +29,10 @@ def test_pipeline_has_preprocessing_and_classifier():
 def test_api_prediction():
     app = create_app(model_loader=lambda path: FakeModel())
     with TestClient(app) as client:
+        home = client.get("/")
+        assert home.status_code == 200
+        assert home.json()["service"] == "Loan Approval API"
+
         response = client.post(
             "/predict",
             json={

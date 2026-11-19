@@ -35,6 +35,15 @@ def create_app(model_loader=joblib.load):
 
     app = FastAPI(title="Loan Approval API", version="1.0.0", lifespan=lifespan)
 
+    @app.get("/")
+    def home():
+        return {
+            "service": "Loan Approval API",
+            "status": "ready",
+            "docs": "/docs",
+            "health": "/health",
+        }
+
     @app.get("/health")
     def health():
         return {"status": "healthy"}
